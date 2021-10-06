@@ -35,10 +35,6 @@ app.get('/', (req, res) => {
 	res.send('Welcome to SkateSecrets')
 });
 
-app.get('/login', (req,res) => {
-	res.send('Send over your username and password')
-});
-
 app.post('/login', login.login)
 
 app.post('/signup', login.signup);

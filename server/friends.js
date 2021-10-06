@@ -33,29 +33,27 @@ function friend_search(req, res) {
 
 function remove_friend(req, res) {
     var dict = req.body
+    var queryer = req.session
 
-    login.verify_user(req, res, function (queryer) {
-
-        database.connect(res, function () {
+    database.connect(res, function () {
 
 
-         // Get friends user_id number
-            qry = `SELECT * FROM users WHERE username = '${dict.user}'`
+        // Get friends user_id number
+        qry = `SELECT * FROM users WHERE username = '${dict.user}'`
+        database.query(res, qry, function(result) {
+            if (result.length != 1) return res.status(409).send("Username doesn't exist.");
+            dict.user_id = result[0].user_id
+
+            qry = `DELETE FROM friends where (sender_id = '${queryer.user_id}' AND addressee_id = '${dict.user_id}') OR (sender_id = '${dict.user_id}' AND addressee_id = '${queryer.user_id}')`
             database.query(res, qry, function(result) {
-                if (result.length != 1) return res.status(409).send("Username doesn't exist.");
-                dict.user_id = result[0].user_id
 
-                qry = `DELETE FROM friends where (sender_id = '${queryer.user_id}' AND addressee_id = '${dict.user_id}') OR (sender_id = '${dict.user_id}' AND addressee_id = '${queryer.user_id}')`
-                database.query(res, qry, function(result) {
+                if (result.affectedRows == 0) {
+                    res.status(200).send(`${dict.user} is not on your friends list.`)
+                }
 
-                    if (result.affectedRows == 0) {
-                        res.status(200).send(`${dict.user} is not on your friends list.`)
-                    }
-
-                    if (result.affectedRows == 1) {
-                        res.status(200).send(`${dict.user} has been removed from your friends list.`)
-                    }
-                })
+                if (result.affectedRows == 1) {
+                    res.status(200).send(`${dict.user} has been removed from your friends list.`)
+                }
             })
         })
     })
@@ -63,66 +61,64 @@ function remove_friend(req, res) {
 
 function add_friend(req, res) {
     var dict = req.body
+    var queryer = req.session
 
-    login.verify_user(req, res, function (queryer) {
-
-        database.connect(res, function () {
+    database.connect(res, function () {
 
 
-            // Get aquaintance user_id number
-            qry = `SELECT * FROM users WHERE username = '${dict.user}'`
+        // Get aquaintance user_id number
+        qry = `SELECT * FROM users WHERE username = '${dict.user}'`
+        database.query(res, qry, function(result) {
+
+            if (result.length != 1) return res.status(409).send("Username doesn't exist.");
+            dict.user_id = result[0].user_id
+
+            // Check if already friends
+            qry = `SELECT * FROM friends WHERE (sender_id = '${queryer.user_id}' AND addressee_id = '${dict.user_id}') OR (sender_id = '${dict.user_id}' AND addressee_id = '${queryer.user_id}')`
+
             database.query(res, qry, function(result) {
 
-                if (result.length != 1) return res.status(409).send("Username doesn't exist.");
-                dict.user_id = result[0].user_id
+                if (result.length > 1) {
+                    res.status(400).send("Database corruption error.")
+                    console.log("duplicate friendships in friendship table");
+                    return
+                }
 
-                // Check if already friends
-                qry = `SELECT * FROM friends WHERE (sender_id = '${queryer.user_id}' AND addressee_id = '${dict.user_id}') OR (sender_id = '${dict.user_id}' AND addressee_id = '${queryer.user_id}')`
 
-                database.query(res, qry, function(result) {
+                if (result.length == 0) {
+                    qry = `INSERT INTO friends (sender_id, addressee_id, status) VALUES ('${queryer.user_id}', '${dict.user_id}', 'R')`
+                    database.query(res, qry, function(result) {
+                        res.status(200).send("Friend Request Send!");
+                    })
+                    return;
+                }
 
-                    if (result.length > 1) {
-                        res.status(400).send("Database corruption error.")
-                        console.log("duplicate friendships in friendship table");
-                        return
+                if (queryer.user_id == result[0].sender_id) {
+                    if (result[0].status == 'R') {
+                        res.status(200).send("Friendship pending approval")
                     }
-
-
-                    if (result.length == 0) {
-                        qry = `INSERT INTO friends (sender_id, addressee_id, status) VALUES ('${queryer.user_id}', '${dict.user_id}', 'R')`
-                        database.query(res, qry, function(result) {
-                            res.status(200).send("Friend Request Send!");
-                        })
+                    if (result[0].status == 'B') {
+                        res.status(200).send("User blocked you.")
+                    }
+                    if (result[0].status == 'D') {
+                        res.status(200).send("Friendship declined")
+                    }
+                    if (result[0].status == 'A') {
+                        res.status(200).send("Already friends")
+                    }
+                    return;
+                }
+                if (queryer.user_id == result[0].addressee_id) {
+                    if (result[0].status == 'A') {
+                        res.status(200).send("Already friends")
                         return;
                     }
-
-                    if (queryer.user_id == result[0].sender_id) {
-                        if (result[0].status == 'R') {
-                            res.status(200).send("Friendship pending approval")
-                        }
-                        if (result[0].status == 'B') {
-                            res.status(200).send("User blocked you.")
-                        }
-                        if (result[0].status == 'D') {
-                            res.status(200).send("Friendship declined")
-                        }
-                        if (result[0].status == 'A') {
-                            res.status(200).send("Already friends")
-                        }
-                        return;
-                    }
-                    if (queryer.user_id == result[0].addressee_id) {
-                        if (result[0].status == 'A') {
-                            res.status(200).send("Already friends")
-                            return;
-                        }
-                        
-                        qry = `UPDATE friends SET status = 'A' WHERE sender_id = '${dict.user_id}' AND addressee_id = '${queryer.user_id}'`
-                        database.query(res, qry, function(result) {
-                            res.status(200).send("Friendship accepted!")
-                        })
-                    }
-                })
+                    
+                    qry = `UPDATE friends SET status = 'A' WHERE sender_id = '${dict.user_id}' AND addressee_id = '${queryer.user_id}'`
+                    database.query(res, qry, function(result) {
+                        res.status(200).send("Friendship accepted!")
+                    })
+                }
             })
         })
     })
