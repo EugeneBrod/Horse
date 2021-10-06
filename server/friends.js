@@ -2,7 +2,7 @@ const index = require('./index');
 const login = require('./login');
 const jwt = require('jsonwebtoken');
 const database = require('./database');
-
+const comm = require('./communications')
 
 function friend_search(req, res) {
 
@@ -124,6 +124,18 @@ function add_friend(req, res) {
     })
 }
 
+function set_availability(req, res) {
+    const status = req.body.available
+    database.connect(res, function () {
+        qry = `UPDATE users SET available = ${status} WHERE username = '${req.session.username}';`
+        database.query(res, qry, function(result) {
+            console.log(result);
+            return comm.send(res, 200, {}, 'Succesfully update availability status');
+        })
+    })
+}
+
 exports.friend_search = friend_search
 exports.add_friend = add_friend
 exports.remove_friend = remove_friend
+exports.set_availability = set_availability

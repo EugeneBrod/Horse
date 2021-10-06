@@ -13,7 +13,6 @@ module.exports.authorize = function (req, res, next) {
           return res.status(401).send(err);
       }
       req.session = data
-      
       next()
   })
 }

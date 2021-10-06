@@ -51,6 +51,8 @@ app.post('/add_friend', friends.add_friend);
 
 app.delete('/remove_friend', friends.remove_friend);
 
+app.post('/set_availability', friends.set_availability);
+
 app.post('/game', lobby.create_session);
 
 app.post('/join', lobby.join_session);
