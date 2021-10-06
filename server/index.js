@@ -53,6 +53,8 @@ app.delete('/remove_friend', friends.remove_friend);
 
 app.post('/set_availability', friends.set_availability);
 
+app.get('/getNearbyUsers', location.getNearbyUsers);
+
 app.post('/game', lobby.create_session);
 
 app.post('/join', lobby.join_session);
