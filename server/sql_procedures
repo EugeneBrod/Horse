@@ -1,0 +1,26 @@
+
+
+CREATE PROCEDURE add_user_to_lobby(
+    IN user_id_qry INT,
+    IN session_id_qry INT
+)
+BEGIN
+    SELECT status INTO @qry FROM game_sessions WHERE session_id = session_id_qry;
+    IF EXISTS(SELECT(@qry)) AND @qry = 'P' THEN
+        INSERT INTO session_members (session_id, user_id) VALUES (session_id_qry, user_id_qry);
+    END IF;
+END //
+
+
+CREATE PROCEDURE find_next_setter(
+    IN session_id_qry INT
+)
+BEGIN
+    SELECT num_players INTO @num_players FROM game_sessions WHERE session_id = session_id_qry;
+    SELECT setter INTO @setter FROM game_sessions WHERE session_id = session_id_qry;
+    SET @setter = MOD(@setter + 1, @num_players);
+    WHILE (SELECT count(*) FROM session_members WHERE lost = 0 AND set_order = @setter) = 0 DO
+        SET @setter = MOD(@setter + 1, @num_players);
+    END WHILE;
+    UPDATE game_sessions SET setter = @setter WHERE session_id = session_id_qry;
+END //

@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Backend service for Game-Of-Skate competition system.",
+  "main": "entry.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eugene Brodsky",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EugeneBrod/Skate.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "game",
+    "skate"
+  ],
+  "bugs": {
+    "url": "https://github.com/EugeneBrod/Skate/issues"
+  },
+  "homepage": "https://github.com/EugeneBrod/Skate#readme",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5"
+  }
+}
