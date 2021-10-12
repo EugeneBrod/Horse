@@ -7,7 +7,7 @@ const ITERATIONS = 100;
 const HASH_LENGTH = 255;
 const comm = require('./communications')
 
-function signup (req, res) {
+function signup(req, res) {
     /*
     required params in request:
         username
@@ -23,13 +23,13 @@ function signup (req, res) {
         }
         return res.status(200).send(JSON.stringify(data));
     }
-    
+
     database.connect(res, function () {
 
 
         // Check that given username is unique.
         qry = `SELECT * FROM users WHERE username = '${dict.username}'`
-        database.query(res, qry, function(result) {
+        database.query(res, qry, function (result) {
             if (result.length != 0) return res.status(409).send("Username already exists");
 
             // Hash the salted password.
@@ -39,7 +39,7 @@ function signup (req, res) {
                 // Submit new account to database
                 hash = hash.toString('base64').substring(0, 255);
                 qry = `INSERT INTO users (username, hash, salt, stance) VALUES ('${dict.username}', '${hash}', '${salt}', '${dict.stance}')`;
-                database.query(res, qry, function(result) {
+                database.query(res, qry, function (result) {
                     comm.send(res, 200, {}, `Welcome to Skate ${dict.username}! Try logging in.`)
                 });
             });
@@ -47,7 +47,7 @@ function signup (req, res) {
     });
 };
 
-function remove_user(req,res) {
+function remove_user(req, res) {
     var dict = req.body
 
     decoded = req.session
@@ -56,14 +56,14 @@ function remove_user(req,res) {
 
         // See that username exists.
         qry = `SELECT * FROM users WHERE username = '${decoded.username}'`
-        database.query(res, qry, function(result) {
+        database.query(res, qry, function (result) {
 
             if (result.length != 1) return res.status(409).send("Invalid username/password.");
 
             // Check that token belongs to intended user.
             if (result[0].hash != decoded.hash) return res.status(400).send("Invalid username/password.");
             qry = `DELETE FROM users WHERE user_id = '${decoded.user_id}'`;
-            database.query(res, qry, function(result) {
+            database.query(res, qry, function (result) {
                 return res.status(200).send(`Successfully deleted user: ${decoded.username}.`)
             })
         })
@@ -77,18 +77,18 @@ function login(req, res) {
         password
     */
     var dict = req.body;
-    
+
     database.connect(res, function () {
 
 
         // See that username exists.
         qry = `SELECT * FROM users WHERE username = '${dict.username}'`;
-        database.query(res, qry, function(result) {
+        database.query(res, qry, function (result) {
             if (result.length != 1) return res.status(409).send("Invalid username/password.");
 
             // Check that password is valid.
             crypto.pbkdf2(dict.password, result[0].salt, ITERATIONS, HASH_LENGTH, 'sha1', function (err, hash) {
-                hash = hash.toString('base64').substring(0,255);
+                hash = hash.toString('base64').substring(0, 255);
                 if (err) return res.status(400).send("Error generating hash");
 
                 if (result[0].hash != hash) return res.status(400).send("Invalid username/password.");
@@ -111,7 +111,7 @@ function login(req, res) {
                     }
                     comm.send(res, 200, data, 'Session token is in this response.')
                 })
-            }); 
+            });
         });
     });
 };
