@@ -17,6 +17,7 @@ function connect(res, callback) {
             res.status(400).send("Error connecting to database.")
             throw err
         }
+
         callback()
     })
 }

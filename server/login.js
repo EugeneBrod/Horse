@@ -77,6 +77,7 @@ function login(req, res) {
         password
     */
     var dict = req.body;
+    console.log(dict)
 
     database.connect(res, function () {
 
@@ -84,7 +85,11 @@ function login(req, res) {
         // See that username exists.
         qry = `SELECT * FROM users WHERE username = '${dict.username}'`;
         database.query(res, qry, function (result) {
-            if (result.length != 1) return res.status(409).send("Invalid username/password.");
+
+            if (result.length != 1) {
+                return comm.send(res, 409, {}, "Invalid username/password.")
+            }
+
 
             // Check that password is valid.
             crypto.pbkdf2(dict.password, result[0].salt, ITERATIONS, HASH_LENGTH, 'sha1', function (err, hash) {

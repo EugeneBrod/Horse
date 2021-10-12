@@ -7,6 +7,7 @@ const database = require('./database');
 const game = require('./game');
 const auth = require('./auth');
 const location = require('./location')
+//const logger = require('./requestLogger')
 
 
 
@@ -17,6 +18,7 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+//app.use(logger.logRequest);
 app.use(auth.authorize);
 app.use(location.updateLocation);
 
