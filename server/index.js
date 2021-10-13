@@ -7,7 +7,8 @@ const database = require('./database');
 const game = require('./game');
 const auth = require('./auth');
 const location = require('./location')
-//const logger = require('./requestLogger')
+const comm = require('./communications')
+const logger = require('./requestLogger')
 
 
 
@@ -36,7 +37,7 @@ res.end(JSON.stringify(data))
 
 
 app.get('/', (req, res) => {
-  res.send('Welcome to SkateSecrets')
+  return comm.send(res, 200, {}, "Welcome to SkateSecrets!")
 });
 
 app.post('/login', login.login)

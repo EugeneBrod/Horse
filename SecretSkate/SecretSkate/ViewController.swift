@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController {
 
@@ -16,40 +17,38 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         // prepare json data
         urlTest.text = "hello"
-        let json: [String: Any] = ["username": "xen",
-                                   "password": "password"]
-
-        struct MyObject: Codable {
-            let username: String
-            let password: String
+        
+        func bannerMessage(data: NSDictionary) -> Void {
+            self.urlTest.text = data["message"] as! String
         }
         
-        let dictionary = ["object-1": MyObject(username: "xen", password: "password")]
+        let datas: [String: Any] = ["username": "xen", "password": "password"]
         
-        let encodedDictionary = try! JSONEncoder().encode(dictionary)
-        // create post request
-        let url = URL(string: "http://localhost:8000/login")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        let result = makeRequest(method: .post , url:"http://localhost:8000/login", data: datas, handler: bannerMessage)
 
-        // insert json data to the request
-        request.httpBody = encodedDictionary
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                print(error?.localizedDescription ?? "No data")
-                self.urlTest.text = error?.localizedDescription
-                return
-            }
-            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            if let responseJSON = responseJSON as? [String: Any] {
-                self.urlTest.text = responseJSON.description
-            }
-        }
-
-        task.resume()
+        
     }
 
 
+}
+
+func makeRequest(method: HTTPMethod, url: String, data: [String:Any], handler: @escaping (NSDictionary) -> Void) {
+    //alter data???
+    AF.request(url, method: method, parameters: data, encoding: JSONEncoding.default)
+                .responseJSON { response in
+    //to get status code
+                    if let status = response.response?.statusCode {
+                        switch(status){
+                        case 200:
+                            if let result = response.value {
+                                let JSON = result as! NSDictionary
+                                handler(JSON)
+                            }
+                        default:
+                            print("error with response status: \(status)")
+                        }
+                    }
+            }
+    
 }
 

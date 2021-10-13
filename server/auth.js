@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const database = require('./database');
+const comm = require('./communications')
 
 
 module.exports.authorize = function (req, res, next) {
@@ -12,7 +13,7 @@ module.exports.authorize = function (req, res, next) {
   }
   jwt.verify(req.body.token, process.env.JWT_SECRET, function (err, data) {
     if (err) {
-      return res.status(401).send(err);
+      return comm.send(res, 401, {}, err)
     }
     req.session = data
     next()
@@ -22,7 +23,7 @@ module.exports.authorize = function (req, res, next) {
 module.exports.dispenseToken = function (payload, callback) {
   jwt.sign(payload, process.env.JWT_SECRET, function (err, token) {
     if (err) {
-      return res.status(400).send(err);
+      return comm.send(res, 401, {}, err)
     }
     callback(token)
   })

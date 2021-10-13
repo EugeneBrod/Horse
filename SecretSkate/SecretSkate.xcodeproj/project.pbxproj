@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,7 @@
 		A2D2126F2715F2F400908877 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2D2126D2715F2F400908877 /* LaunchScreen.storyboard */; };
 		A2D2127A2715F2F400908877 /* SecretSkateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212792715F2F400908877 /* SecretSkateTests.swift */; };
 		A2D212852715F2F400908877 /* SecretSkateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212842715F2F400908877 /* SecretSkateUITests.swift */; };
+		A2D212972717828F00908877 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A2D212962717828F00908877 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2D212972717828F00908877 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +146,9 @@
 			dependencies = (
 			);
 			name = SecretSkate;
+			packageProductDependencies = (
+				A2D212962717828F00908877 /* Alamofire */,
+			);
 			productName = SecretSkate;
 			productReference = A2D2125F2715F2EB00908877 /* SecretSkate.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +220,9 @@
 				Base,
 			);
 			mainGroup = A2D212562715F2EB00908877;
+			packageReferences = (
+				A2D212952717828F00908877 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = A2D212602715F2EB00908877 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -593,6 +601,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A2D212952717828F00908877 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A2D212962717828F00908877 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2D212952717828F00908877 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A2D212572715F2EB00908877 /* Project object */;
 }
