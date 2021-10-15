@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		A2D212632715F2EB00908877 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212622715F2EB00908877 /* AppDelegate.swift */; };
 		A2D212652715F2EB00908877 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212642715F2EB00908877 /* SceneDelegate.swift */; };
-		A2D212672715F2EB00908877 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212662715F2EB00908877 /* ViewController.swift */; };
 		A2D2126A2715F2EB00908877 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2D212682715F2EB00908877 /* Main.storyboard */; };
 		A2D2126C2715F2F400908877 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2D2126B2715F2F400908877 /* Assets.xcassets */; };
 		A2D2126F2715F2F400908877 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2D2126D2715F2F400908877 /* LaunchScreen.storyboard */; };
 		A2D2127A2715F2F400908877 /* SecretSkateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212792715F2F400908877 /* SecretSkateTests.swift */; };
 		A2D212852715F2F400908877 /* SecretSkateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212842715F2F400908877 /* SecretSkateUITests.swift */; };
 		A2D212972717828F00908877 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A2D212962717828F00908877 /* Alamofire */; };
+		A2D212A32718B69A00908877 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D2129B2718B32100908877 /* Networking.swift */; };
+		A2D212A72718B69D00908877 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212662715F2EB00908877 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		A2D212802715F2F400908877 /* SecretSkateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SecretSkateUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2D212842715F2F400908877 /* SecretSkateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSkateUITests.swift; sourceTree = "<group>"; };
 		A2D212862715F2F400908877 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2D2129B2718B32100908877 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				A2D2126B2715F2F400908877 /* Assets.xcassets */,
 				A2D2126D2715F2F400908877 /* LaunchScreen.storyboard */,
 				A2D212702715F2F400908877 /* Info.plist */,
+				A2D2129B2718B32100908877 /* Networking.swift */,
 			);
 			path = SecretSkate;
 			sourceTree = "<group>";
@@ -266,9 +269,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2D212672715F2EB00908877 /* ViewController.swift in Sources */,
 				A2D212632715F2EB00908877 /* AppDelegate.swift in Sources */,
 				A2D212652715F2EB00908877 /* SceneDelegate.swift in Sources */,
+				A2D212A72718B69D00908877 /* ViewController.swift in Sources */,
+				A2D212A32718B69A00908877 /* Networking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
