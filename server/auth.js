@@ -6,6 +6,7 @@ const comm = require('./communications')
 module.exports.authorize = function (req, res, next) {
   //exceptional routes
   EXCEPTIONAL_ROOTS = ['GET'+'/','POST'+'/signup','POST'+'/login']
+  console.log("got into authorization middleware")
 
   if (EXCEPTIONAL_ROOTS.includes(req.method + req.url)) {
     next()

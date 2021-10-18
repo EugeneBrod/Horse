@@ -7,7 +7,8 @@ Middleware that tracks the location of every authenticated user. A user is authe
 when the request has a req.session attribute.
 */
 
-module.exports.updateLocation = function (req, res, next) {
+function updateLocation(req, res, next) {
+  console.log("got into updateLocation")
   if (req.session) {
     qry = `UPDATE users SET lat = ${req.body.lat}, lon = ${req.body.lon} WHERE username = '${req.session.username}';`
     database.connect(res, function() {
@@ -18,18 +19,19 @@ module.exports.updateLocation = function (req, res, next) {
   next()
 }
 
-module.exports.getNearbyUsers = function (req, res) {
+function getNearbyUsers (req, res) {
   /*
   required params:
     req.body.lat
     req.body.lon
-    req.body.sear
+    req.body.searchRadius
   */
+  console.log("got into getNearbyUsers")
   const availability = true
   qry = `SELECT * FROM users WHERE available = ${availability};`
   database.connect(res, function() {
     database.query(res, qry, function (result) {
-      var search_results = []
+      var searchResults = []
       Object.keys(result).forEach( function(key) {
         start = {
           'latitude': req.body.lat,
@@ -46,11 +48,14 @@ module.exports.getNearbyUsers = function (req, res) {
           "stance": result[key].stance,
           "rep": result[key].rep
         }
-        search_results.push(dict)
+        searchResults.push(dict)
         }
       })
-      data = {'search_results': search_results}
+      data = {'searchResults': searchResults}
       comm.send(res, 200, data, 'Successfully retrieved nearby users that are available')
     })
   })
 }
+
+exports.getNearbyUsers = getNearbyUsers
+exports.updateLocation = updateLocation

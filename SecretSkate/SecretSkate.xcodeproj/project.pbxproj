@@ -17,6 +17,7 @@
 		A2D212972717828F00908877 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A2D212962717828F00908877 /* Alamofire */; };
 		A2D212A32718B69A00908877 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D2129B2718B32100908877 /* Networking.swift */; };
 		A2D212A72718B69D00908877 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212662715F2EB00908877 /* ViewController.swift */; };
+		A2D212AC271DEFE700908877 /* TokenSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212AB271DEFE700908877 /* TokenSingleton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		A2D212842715F2F400908877 /* SecretSkateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSkateUITests.swift; sourceTree = "<group>"; };
 		A2D212862715F2F400908877 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2D2129B2718B32100908877 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		A2D212AB271DEFE700908877 /* TokenSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSingleton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				A2D2126D2715F2F400908877 /* LaunchScreen.storyboard */,
 				A2D212702715F2F400908877 /* Info.plist */,
 				A2D2129B2718B32100908877 /* Networking.swift */,
+				A2D212AB271DEFE700908877 /* TokenSingleton.swift */,
 			);
 			path = SecretSkate;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2D212632715F2EB00908877 /* AppDelegate.swift in Sources */,
+				A2D212AC271DEFE700908877 /* TokenSingleton.swift in Sources */,
 				A2D212652715F2EB00908877 /* SceneDelegate.swift in Sources */,
 				A2D212A72718B69D00908877 /* ViewController.swift in Sources */,
 				A2D212A32718B69A00908877 /* Networking.swift in Sources */,

@@ -19,9 +19,10 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-//app.use(logger.logRequest);
 app.use(auth.authorize);
 app.use(location.updateLocation);
+//app.use(logger.logRequest);
+
 
 
 /*
@@ -46,8 +47,6 @@ app.post('/signup', login.signup);
 
 app.delete('/signup', login.remove_user);
 
-
-
 app.get('/search', friends.friend_search);
 
 app.post('/add_friend', friends.add_friend);
@@ -56,7 +55,7 @@ app.delete('/remove_friend', friends.remove_friend);
 
 app.post('/set_availability', friends.set_availability);
 
-app.get('/getNearbyUsers', location.getNearbyUsers);
+app.post('/getNearbyUsers', location.getNearbyUsers);
 
 app.post('/game', lobby.create_session);
 
