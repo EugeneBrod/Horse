@@ -1,4 +1,6 @@
 const mysql = require('mysql2');
+const comm = require('./communications')
+
 
 
 const con = mysql.createConnection({
@@ -14,10 +16,8 @@ exports.con = con;
 function connect(res, callback) {
     con.connect(function (err) {
         if (err) {
-            res.status(400).send("Error connecting to database.")
-            throw err
+            return comm.send(res, 400, {}, "Error connecting to database.")
         }
-
         callback()
     })
 }
@@ -26,8 +26,7 @@ function connect(res, callback) {
 function query(res, qry, callback) {
     con.query(qry, function (err, result) {
         if (err) {
-            res.status(500).send("Error querying to database.");
-            throw err
+            return comm.send(res, 500, {}, "Error querying the database.")
         }
         callback(result)
     })

@@ -14,7 +14,7 @@ module.exports.authorize = function (req, res, next) {
   }
   jwt.verify(req.body.token, process.env.JWT_SECRET, function (err, data) {
     if (err) {
-      return comm.send(res, 401, {}, err)
+      return comm.send(res, 401, {}, "Log in before you can access user search!")
     }
     req.session = data
     next()
