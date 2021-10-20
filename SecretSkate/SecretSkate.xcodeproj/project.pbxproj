@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A2C4C2C8271F83DF006EB048 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C4C2C7271F83DF006EB048 /* Location.swift */; };
 		A2D212632715F2EB00908877 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212622715F2EB00908877 /* AppDelegate.swift */; };
 		A2D212652715F2EB00908877 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212642715F2EB00908877 /* SceneDelegate.swift */; };
 		A2D2126A2715F2EB00908877 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2D212682715F2EB00908877 /* Main.storyboard */; };
@@ -17,7 +18,6 @@
 		A2D212972717828F00908877 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A2D212962717828F00908877 /* Alamofire */; };
 		A2D212A32718B69A00908877 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D2129B2718B32100908877 /* Networking.swift */; };
 		A2D212A72718B69D00908877 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212662715F2EB00908877 /* ViewController.swift */; };
-		A2D212AC271DEFE700908877 /* TokenSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D212AB271DEFE700908877 /* TokenSingleton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A2C4C2C7271F83DF006EB048 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		A2D2125F2715F2EB00908877 /* SecretSkate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecretSkate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2D212622715F2EB00908877 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2D212642715F2EB00908877 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,7 +54,6 @@
 		A2D212842715F2F400908877 /* SecretSkateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSkateUITests.swift; sourceTree = "<group>"; };
 		A2D212862715F2F400908877 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2D2129B2718B32100908877 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
-		A2D212AB271DEFE700908877 /* TokenSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSingleton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				A2D212622715F2EB00908877 /* AppDelegate.swift */,
+				A2C4C2C7271F83DF006EB048 /* Location.swift */,
 				A2D212642715F2EB00908877 /* SceneDelegate.swift */,
 				A2D212662715F2EB00908877 /* ViewController.swift */,
 				A2D212682715F2EB00908877 /* Main.storyboard */,
@@ -113,7 +114,6 @@
 				A2D2126D2715F2F400908877 /* LaunchScreen.storyboard */,
 				A2D212702715F2F400908877 /* Info.plist */,
 				A2D2129B2718B32100908877 /* Networking.swift */,
-				A2D212AB271DEFE700908877 /* TokenSingleton.swift */,
 			);
 			path = SecretSkate;
 			sourceTree = "<group>";
@@ -273,8 +273,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2D212632715F2EB00908877 /* AppDelegate.swift in Sources */,
-				A2D212AC271DEFE700908877 /* TokenSingleton.swift in Sources */,
 				A2D212652715F2EB00908877 /* SceneDelegate.swift in Sources */,
+				A2C4C2C8271F83DF006EB048 /* Location.swift in Sources */,
 				A2D212A72718B69D00908877 /* ViewController.swift in Sources */,
 				A2D212A32718B69A00908877 /* Networking.swift in Sources */,
 			);

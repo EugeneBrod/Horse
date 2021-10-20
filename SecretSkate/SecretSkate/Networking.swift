@@ -16,6 +16,7 @@ class Networking {
         let defaults = UserDefaults.standard
         if let token = defaults.string(forKey: "secretSkateToken") {
             alteredData["token"] = token
+            
         }
         
         AF.request(url, method: method, parameters: alteredData, encoding: JSONEncoding.default)
@@ -26,7 +27,7 @@ class Networking {
                                     let JSON = result as! NSDictionary
                                     if let status = response.response?.statusCode {
                                         switch(status){
-                                        case 200..<299:
+                                        case 200..<300:
                                             handler(JSON)
                                         default:
                                             errorHandler(JSON)

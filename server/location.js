@@ -46,7 +46,9 @@ function getNearbyUsers (req, res) {
           "user_id": result[key].user_id,
           "username": result[key].username,
           "stance": result[key].stance,
-          "rep": result[key].rep
+          "rep": result[key].rep,
+          "lat": result[key].lat,
+          "lon": result[key].lon
         }
         searchResults.push(dict)
         }

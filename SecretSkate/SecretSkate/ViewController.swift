@@ -7,16 +7,31 @@
 
 import UIKit
 import Alamofire
+import MapKit
 
 class ViewController: UIViewController {
 
+    struct MapPoint {
+        var name: String
+        var lattitude: Double
+        var longtitude: Double
+        
+        init(name: String, lat: CLLocationDegrees, lon: CLLocationDegrees) {
+            self.name = name
+            self.lattitude = lat
+            self.longtitude = lon
+        }
+    }
+    
     @IBOutlet weak var usernameField: UITextField!
     
     @IBOutlet weak var passwordField: UITextField!
     
     @IBOutlet weak var bannerMessage: UILabel!
     
-    @IBOutlet weak var searchResults: UILabel!
+    @IBOutlet weak var userMap: MKMapView!
+    
+    let locationManager = CLLocationManager()
     
     
     @IBAction func loginSubmit(_ sender: UIButton) {
@@ -28,11 +43,12 @@ class ViewController: UIViewController {
             func afterPostRequest(data: NSDictionary) -> Void {
                 let defaults = UserDefaults.standard
                 defaults.set(data["token"], forKey: "secretSkateToken")
+                self.bannerMessage.text = "Shhh, welcome to S K A T E S E C R E T S"
             }
             func errorAfterPostRequest(data: NSDictionary) -> Void {
                 self.bannerMessage.text = data["message"] as? String                
             }
-            let data: [String: Any] = ["username": self.usernameField.text, "password": self.passwordField.text]
+            let data: [String: Any] = ["username": self.usernameField.text as Any, "password": self.passwordField.text as Any]
             Networking().makeRequest(method: .post , url:"http://localhost:8000/login", data: data, handler: afterPostRequest(data:), errorHandler: errorAfterPostRequest(data:))
             }
         }
@@ -42,12 +58,17 @@ class ViewController: UIViewController {
         func handler(data: NSDictionary) -> Void {
             let wrappedListofUsers = data["searchResults"] as? [[String: Any]]
             if let listOfUsers = wrappedListofUsers {
-                var result: String = ""
+                var userLocations: [MapPoint] = []
                 for user in listOfUsers {
-                    result = result + (user["username"] as! String) + " "
+                    let mapPoint = MapPoint(name: user["username"] as! String, lat: (user["lat"] as! NSString).doubleValue, lon: (user["lon"] as! NSString).doubleValue)
+                    userLocations.append(mapPoint)
                 }
-                self.searchResults.text = result
-                print(result)
+                for mapPoint in userLocations {
+                    let annotations = MKPointAnnotation()
+                    annotations.title = mapPoint.name
+                    annotations.coordinate = CLLocationCoordinate2D(latitude: mapPoint.lattitude, longitude: mapPoint.longtitude)
+                    userMap.addAnnotation(annotations)
+                }
             }
         }
         func errorHandler(data: NSDictionary) -> Void {
@@ -59,10 +80,27 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         // prepare json data
-        
-        
+        if CLLocationManager.locationServicesEnabled() {
+            checkAuthorizationStatus()
+        }
+        self.usernameField.text = "xen"
+        self.passwordField.text = "password"
 
         
+    }
+    
+    func checkAuthorizationStatus() {
+      switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse:
+            self.userMap.showsUserLocation = true
+            break
+        case .denied: break
+        case .notDetermined: break
+        case .restricted: break
+        case .authorizedAlways:
+            self.userMap.showsUserLocation = true
+            break
+      }
     }
 }
 
