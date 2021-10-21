@@ -110,10 +110,13 @@ function login(req, res) {
                 auth.dispenseToken(payload, function (token) {
                     data = {
                         "token": token,
-                        "stance": dict.stance,
-                        "rep": dict.rep,
-                        "date_created": dict.date_created
+                        "username": result[0].username,
+                        "stance": result[0].stance,
+                        "rep": result[0].rep,
+                        "date_created": result[0].date_created,
+                        "user_id": result[0].user_id
                     }
+                    console.log(data)
                     comm.send(res, 200, data, 'Session token is in this response.')
                 })
             });
